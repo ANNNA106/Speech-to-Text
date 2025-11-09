@@ -1,5 +1,6 @@
 # backend/app.py
 import os
+import traceback
 import uuid
 from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
@@ -36,6 +37,9 @@ def create_app():
             original_name = secure_filename(file.filename)
             job_id = str(uuid.uuid4())
             upload_folder = app.config["UPLOAD_FOLDER"]
+            # Ensure upload folder exists (defensive - config should create it, but
+            # this avoids race conditions or manual deletions while the server is running)
+            os.makedirs(upload_folder, exist_ok=True)
             audio_path = os.path.join(upload_folder, f"{job_id}_{original_name}")
             file.save(audio_path)
 
@@ -47,7 +51,9 @@ def create_app():
                 transcript, summary = run_asr_pipeline(audio_path)
                 update_result(job_id, transcript, summary, status="COMPLETED")
             except Exception as e:
-                update_result(job_id, "", f"Processing failed: {e}", status="FAILED")
+                tb = traceback.format_exc()
+                # Store the full traceback in the summary_text so the frontend can show it for debugging
+                update_result(job_id, "", f"Processing failed: {e}\n\n{tb}", status="FAILED")
 
             return jsonify({"job_id": job_id})
 

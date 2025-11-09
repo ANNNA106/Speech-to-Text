@@ -6,8 +6,10 @@ python-dotenv
 openai-whisper
 torch
 ffmpeg-python
+ffmpeg
 
 # Summarization / NLP
 transformers
 sentencepiece
 accelerate
+

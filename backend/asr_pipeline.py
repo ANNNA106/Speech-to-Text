@@ -98,14 +98,25 @@ def summarize_long_text(text: str, max_chars_per_chunk: int = 1500) -> str:
         # BART works best with <= 1024 tokens; here we control by characters
         # You can tune min_length/max_length based on your lecture style
         print(f"[NLP] Summarizing chunk {i+1}/{len(chunks)} (len={len(chunk)})")
-        out = summarizer(
-            chunk,
-            max_length=200,
-            min_length=60,
-            do_sample=False,
-            truncation=True,
-        )
-        summary_text = out[0]["summary_text"].strip()
+
+        # If the chunk is very short, skip summarization and return it as-is
+        if len(chunk) < 300:
+            summary_text = chunk.strip()
+        else:
+            # Choose summarization lengths proportional to input length to avoid
+            # warnings from the transformers pipeline when the requested output is
+            # longer than the input. Keep sensible bounds.
+            computed_max = min(200, max(30, int(len(chunk) / 10)))
+            computed_min = max(10, int(computed_max / 4))
+
+            out = summarizer(
+                chunk,
+                max_length=computed_max,
+                min_length=computed_min,
+                do_sample=False,
+                truncation=True,
+            )
+            summary_text = out[0]["summary_text"].strip()
         chunk_summaries.append(summary_text)
 
     if len(chunk_summaries) == 1:

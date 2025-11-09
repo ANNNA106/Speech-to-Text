@@ -34,9 +34,15 @@ body {
 }
 
 .logo {
-  font-weight: 700;
+  font-weight: 800;
   text-decoration: none;
   color: var(--text);
+  font-size: 1.25rem;
+  letter-spacing: -0.5px;
+}
+
+.app-header {
+  box-shadow: 0 2px 8px rgba(16,24,40,0.03);
 }
 
 .app-header nav a {
@@ -49,6 +55,13 @@ body {
   max-width: 960px;
   margin: 24px auto;
   padding: 0 16px;
+}
+
+.card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.9));
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 6px 18px rgba(16,24,40,0.06);
 }
 
 .primary-button {
@@ -88,9 +101,43 @@ body {
 }
 
 .accessibility-toolbar button {
-  padding: 4px 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 6px;
+  border: 1px solid rgba(0,0,0,0.06);
+  background: white;
+}
+
+.toolbar-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid rgba(0,0,0,0.06);
+  padding: 6px 10px;
+  border-radius: 8px;
   cursor: pointer;
 }
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(0,0,0,0.08);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
 
 .status-badge {
   padding: 4px 10px;
@@ -120,8 +167,184 @@ body {
   gap: 16px;
 }
 
+.hint {
+  color: rgba(0,0,0,0.6);
+  margin-top: 12px;
+}
+
+.upload-hint {
+  margin-top: 10px;
+  padding: 10px 12px;
+  background: rgba(37,99,235,0.06);
+  border: 1px solid rgba(37,99,235,0.12);
+  color: var(--text);
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+.toast-message {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  background: rgba(17,24,39,0.92);
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(2,6,23,0.5);
+  z-index: 1200;
+}
+
 @media (min-width: 900px) {
   .lecture-content {
     grid-template-columns: 1fr 1fr;
   }
 }
+
+/* ===== Improved UI elements ===== */
+
+.lecture-page {
+  padding: 20px 0 48px;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-actions .action-buttons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.btn {
+  --btn-bg: var(--accent);
+  --btn-color: #fff;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: linear-gradient(180deg, var(--btn-bg), color-mix(in srgb, var(--btn-bg) 85%, black 15%));
+  color: var(--btn-color);
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 6px 18px rgba(37,99,235,0.12);
+  transition: transform .08s ease, box-shadow .12s ease, opacity .12s ease;
+}
+
+.btn:active { transform: translateY(1px) scale(.998); }
+.btn:hover { box-shadow: 0 10px 24px rgba(37,99,235,0.14); }
+.btn:disabled { opacity: 0.6; cursor: default; box-shadow: none; }
+
+.btn.secondary {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid rgba(15,23,42,0.06);
+  box-shadow: none;
+}
+
+.upload-page .upload-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 720px;
+}
+
+.upload-page label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.upload-page input[type="file"] {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(15,23,42,0.06);
+  background: #fff;
+}
+
+.summary-section, .transcript-section {
+  background: linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0.95));
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 8px 22px rgba(2,6,23,0.04);
+  min-height: 160px;
+}
+
+.summary-section h2, .transcript-section h2 {
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
+.info-text {
+  color: rgba(2,6,23,0.6);
+  margin: 10px 0 18px;
+}
+
+/* Toast animation */
+.toast-message {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  background: rgba(17,24,39,0.96);
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(2,6,23,0.45);
+  z-index: 1200;
+  opacity: 0;
+  transform: translateY(8px) scale(.995);
+  animation: toast-in .24s ease forwards;
+}
+
+@keyframes toast-in {
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Small responsive tweaks */
+@media (max-width: 640px) {
+  .action-buttons { flex-direction: column; align-items: stretch; }
+  .btn { width: 100%; justify-content: center; }
+  .lecture-content { gap: 12px; }
+}
+
+/* Contributors page */
+.contributors-page .card {
+  max-width: 760px;
+  margin: 18px auto;
+  padding: 20px;
+}
+
+.group-card {
+  margin-top: 12px;
+  padding: 12px;
+  background: rgba(248,250,252,0.8);
+  border-radius: 10px;
+}
+
+.group-name {
+  margin: 0 0 8px 0;
+}
+
+.member-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.member-item {
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid rgba(15,23,42,0.04);
+}
+
+.muted { color: rgba(2,6,23,0.6); margin-bottom: 6px; }
+
+

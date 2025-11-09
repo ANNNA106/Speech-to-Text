@@ -60,6 +60,13 @@ function UploadPage() {
       <p className="hint">
         Supported formats: WAV, MP3, M4A, OGG. Longer files will take more time.
       </p>
+
+      <p className="upload-hint">
+        Recommended max length: <strong>~1 minute (60s)</strong>. If your machine
+        or server has a GPU the backend can handle longer recordings, but on
+        CPU-only hosts large files will be slow or may time out — consider
+        splitting recordings into smaller chunks before upload.
+      </p>
     </section>
   );
 }

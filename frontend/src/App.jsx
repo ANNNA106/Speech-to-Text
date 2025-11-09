@@ -4,6 +4,7 @@ import { Routes, Route, Link } from "react-router-dom";
 import HomePage from "./pages/HomePage.jsx";
 import UploadPage from "./pages/UploadPage.jsx";
 import LecturePage from "./pages/LecturePage.jsx";
+import Contributors from "./pages/Contributors.jsx";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         </Link>
         <nav>
           <Link to="/upload">Upload</Link>
+          <Link to="/contributors" style={{ marginLeft: 12 }}>Contributors</Link>
         </nav>
       </header>
 
@@ -22,6 +24,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/upload" element={<UploadPage />} />
           <Route path="/lecture/:jobId" element={<LecturePage />} />
+          <Route path="/contributors" element={<Contributors />} />
         </Routes>
       </main>
     </div>
