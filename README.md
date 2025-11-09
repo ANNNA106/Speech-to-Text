@@ -1,5 +1,3 @@
-# Speech-to-Text
-
 # Accessible Lecture Transcription & Summarization Website
 
 > A complete web application that converts uploaded **lecture audio** into clean **transcripts and summaries** using AI.  
