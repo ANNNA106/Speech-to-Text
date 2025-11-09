@@ -1,3 +1,13 @@
 flask
 flask-cors
 python-dotenv
+
+# ASR + audio
+openai-whisper
+torch
+ffmpeg-python
+
+# Summarization / NLP
+transformers
+sentencepiece
+accelerate
